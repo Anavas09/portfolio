@@ -1,13 +1,16 @@
-import { useRouter } from 'next/router';
-import Layout from '../../components/layouts/Layout';
 import axios from 'axios';
 
+import BaseLayout from '../../components/layouts/BaseLayout';
+import BasePage from '../../components/BasePage';
+
 const Post = props => (
-  <Layout>
-    <h1>{props.show.name}</h1>
-    <p>{props.show.summary.replace(/<[/]?p>/g, '')}</p>
-    <img src={props.show.image.medium} />
-  </Layout>
+  <BaseLayout>
+    <BasePage>
+      <h1>{props.show.name}</h1>
+      <p>{props.show.summary.replace(/<[/]?p>/g, '')}</p>
+      <img src={props.show.image.medium} />
+    </BasePage>
+  </BaseLayout>
 );
 
 Post.getInitialProps = async (context) => {

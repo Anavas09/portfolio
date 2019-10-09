@@ -1,16 +1,19 @@
 import axios from 'axios';
 
-import Layout from '../../components/layouts/Layout';
+import BaseLayout from '../../components/layouts/BaseLayout';
+import BasePage from '../../components/BasePage';
 
 function Portfolio(props) {
 
   const { post } = props;
 
   return (
-    <Layout>
-      <h1>{post.title}</h1>
-      <p>I am Portfolio page...</p>
-    </Layout>
+    <BaseLayout>
+      <BasePage>
+        <h1>{post.title}</h1>
+        <p>I am Portfolio page...</p>
+      </BasePage>
+    </BaseLayout>
   )
 };
 

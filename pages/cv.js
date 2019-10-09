@@ -1,10 +1,28 @@
-import Layout from '../components/layouts/Layout';
+import { useAuth0 } from "../react-auth0-spa";
+
+import BaseLayout from '../components/layouts/BaseLayout';
+import BasePage from '../components/BasePage';
 
 function CV() {
+  
+  const { isAuthenticated } = useAuth0();
+
+  if ( !isAuthenticated ) {
+    return (
+      <BaseLayout>
+        <BasePage>
+          <p>You need login to see this page!</p>
+        </BasePage>
+      </BaseLayout>
+    )
+  }
+
   return (
-    <Layout>
-      <p>I am CV page...</p>
-    </Layout>
+    <BaseLayout>
+      <BasePage>
+        <p>I am CV page...</p>
+      </BasePage>
+    </BaseLayout>
   )
 };
 

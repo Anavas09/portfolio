@@ -1,0 +1,59 @@
+//FONTS
+@import './shared/fonts';
+
+//COLORS
+@import './shared/colors';
+
+//PAGES
+@import './index';
+@import './portfolios';
+
+//COMPONENTS
+@import './header';
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.self-typed {
+    font-size: 31px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: white;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.error {
+    color: red;
+    font-weight: 700;
+}
+
+.base-page {
+    background-color: #ecedee;
+    color: black;
+    min-height: 100vh;
+    padding: 150px 0 100px 0;
+  
+    .page-header {
+      .page-header-title {
+        font-weight: 700;
+        color: black;
+        display: inline-block;
+        margin-bottom: 20px;
+      }
+    }
+  }

@@ -1,14 +1,16 @@
 import { useRouter } from 'next/router';
-import Layout from '../components/layouts/Layout';
+import BaseLayout from '../components/layouts/BaseLayout';
 
 const Page = () => {
   const router = useRouter();
 
   return (
-    <Layout>
-      <h1>{router.query.title}</h1>
-      <p>This is the blog post content.</p>
-    </Layout>
+    <BaseLayout>
+      <BasePage>
+        <h1>{router.query.title}</h1>
+        <p>This is the blog post content.</p>
+      </BasePage>
+    </BaseLayout>
   );
 };
 

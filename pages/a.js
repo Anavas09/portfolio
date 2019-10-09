@@ -1,14 +1,14 @@
 import BaseLayout from '../components/layouts/BaseLayout';
 import BasePage from '../components/BasePage';
 
-function About() {
+function A() {
   return (
     <BaseLayout>
-      <BasePage className="about-page" title="I am About Page">
-
+      <BasePage className="A-page">
+        <p>This is the A page</p>
       </BasePage>
     </BaseLayout>
   );
 }
 
-export default About;
+export default A;

@@ -1,5 +1,6 @@
-import Layout from '../components/layouts/Layout';
+import BaseLayout from '../components/layouts/BaseLayout';
 import Link from 'next/link';
+import BasePage from '../components/BasePage';
 
 function getPosts() {
   return [
@@ -11,42 +12,44 @@ function getPosts() {
 
 function Blogs() {
   return (
-    <Layout>
-      <h1>My Blog</h1>
-      <ul>
-        {getPosts().map(post => (
-          <li key={post.id}>
-            <Link href="/p/[id]" as={`/p/${post.id}`}>
-              <a>{post.title}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <style jsx>{`
-        h1,
-        a {
-          font-family: 'Arial';
-        }
+    <BaseLayout>
+      <BasePage>
+        <h1>My Blog</h1>
+        <ul>
+          {getPosts().map(post => (
+            <li key={post.id}>
+              <Link href="/p/[id]" as={`/p/${post.id}`}>
+                <a>{post.title}</a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <style jsx>{`
+          h1,
+          a {
+            font-family: 'Arial';
+          }
 
-        ul {
-          padding: 0;
-        }
+          ul {
+            padding: 0;
+          }
 
-        li {
-          list-style: none;
-          margin: 5px 0;
-        }
+          li {
+            list-style: none;
+            margin: 5px 0;
+          }
 
-        a {
-          text-decoration: none;
-          color: blue;
-        }
+          a {
+            text-decoration: none;
+            color: blue;
+          }
 
-        a:hover {
-          opacity: 0.6;
-        }
-      `}</style>
-    </Layout>
+          a:hover {
+            opacity: 0.6;
+          }
+        `}</style>
+      </BasePage>
+    </BaseLayout>
   );
 }
 

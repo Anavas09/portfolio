@@ -6,6 +6,9 @@
 .pnp.js
 /.next
 
+# enviroment
+/server/config/dev.js
+
 # testing
 /coverage
 

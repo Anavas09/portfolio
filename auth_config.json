@@ -1,0 +1,6 @@
+{
+  "domain": "dev-hk8t7icc.auth0.com",
+  "clientId": "HrgwdJa0UkoNjBVbcu78nfLiWxRMjQkN",
+  "callbackUrl" : "http://localhost:3000/callback",
+  "audience": "https://portfolio"
+}
