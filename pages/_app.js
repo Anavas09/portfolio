@@ -9,6 +9,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/main.scss';
 import 'react-typed/dist/animatedCursor.css';
 
+//FontAwesome
+import fontawesome from '../utils/fontawesome';
+
 class MyApp extends App {
   // Only uncomment this method if you have blocking data requirements for
   // every single page in your application. This disables the ability to

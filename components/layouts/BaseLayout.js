@@ -9,6 +9,8 @@ const BaseLayout = (props) => {
     <div className="layout-container" >
       <Head>
         <title>Portfolio</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      </link>
       </Head>
       <Header className={`port-nav-${headerType}`} />
       <main className={`cover ${className}`}>

@@ -9,12 +9,17 @@ const handle = app.getRequestHandler();
 
 const config = require('./config');
 
-const Book = require('./models/book')
 const bodyParser = require('body-parser');
+
+const bookRoutes = require('./routes/book');
+const portfolioRoutes = require('./routes/portfolio');
+
+const portfolioCtrl = require('./controllers/portfolio');
+
 
 const port = process.env.PORT || 3000;
 
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
 
 const products = [
   {
@@ -54,60 +59,8 @@ app.prepare().then(() => {
 
   server.use(bodyParser.json());
 
-  server.post('/api/v1/books', (req, res) => {
-    const bookData = req.body;
-
-    console.log(bookData)
-    const book = new Book(bookData);
-
-    book.save((err, createdBook) => {
-      if (err){
-        return res.status(422).send(err)
-      }
-
-      return res.json(createdBook)
-    })
-  })
-
-  server.get('/api/v1/books', (req, res) => {
-
-    Book.find({}, (err, allBooks) => {
-      if (err){
-        return res.status(422).send(err)
-      }
-
-      return res.json(allBooks)
-    })
-  })
-
-  server.patch('/api/v1/books/:id', (req, res) => {
-    const bookId = req.params.id;
-    const bookData = req.body;
-
-    // Book.findByIdAndUpdate(bookId, bookData, {useFindAndModify: true}, (err, updatedBook) => {
-    //   if (err){
-    //     return res.status(422).send(err)
-    //   }
-
-    //   return res.json(updatedBook)
-    // })
-
-    Book.findById(bookId, (err, foundBook) => {
-      if (err){
-        return res.status(422).send(err)
-      }
-
-      foundBook.set(bookData)
-      foundBook.save((err, savedBook) => {
-        if (err){
-          return res.status(422).send(err)
-        }
-  
-        return res.json(foundBook)
-      })
-    })
-  })
-
+  server.use('/api/v1/books', bookRoutes);
+  server.use('/api/v1/portfolios', portfolioRoutes);
 
   server.get('/secretdata', jwtCheck, checkScopes, (req, res) => {
     return res.json(products)

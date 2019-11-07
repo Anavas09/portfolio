@@ -14,7 +14,7 @@ function Secretx() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      const url = "http://localhost:3000/onlysiteowner";
+      const url = "http://localhost:3000/api/v1/portfolios";
       const fetchAPI = async () => {
         const token = await getTokenSilently();
         const headers = { 'Authorization': `Bearer ${token}` };

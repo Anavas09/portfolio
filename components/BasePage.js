@@ -5,11 +5,11 @@ import PropTypes from 'prop-types'
 
 function BasePage(props){
 
-  const { children, className, title } = props
+  const { children, className, containerClass, title } = props
 
   return (
     <div className={`base-page ${className}`}>
-      <Container>
+      <Container className={containerClass}>
         {title && 
           <div className="page-header">
             <h1 className="page-header-title">
@@ -24,7 +24,8 @@ function BasePage(props){
 };
 
 BasePage.defaultProps = {
-  className: ''
+  className: '',
+  containerClass: ''
 }
 
 BasePage.propTypes = {

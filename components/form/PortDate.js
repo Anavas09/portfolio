@@ -1,12 +1,39 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import DatePicker from "react-datepicker";
+import { parseISO } from 'date-fns';
 import { Button, FormGroup, Label } from 'reactstrap';
  
 import "react-datepicker/dist/react-datepicker.css";
 
 function PortDate(props) {
-  const [startDate, setStartDate] = useState(new Date());
-  const [isHidden, setIsHidden] = useState(false);
+  const { actionType ,initialDate } = props;
+  const propInitialDate = initialDate;
+  const propActionType = actionType;
+
+  debugger;
+
+  const propDateValue = propInitialDate ? initialDate : new Date();
+  const propIsHidden = propInitialDate ? false : true;
+
+  const [isHidden, setIsHidden] = useState(propIsHidden);
+
+  //const initialDatex = format(initialDate, 'MM/dd/yyyy')
+
+  const [dateValue, setDateValue] = useState(propDateValue);
+
+  useEffect(() => {
+    if (initialDate && propActionType === 'Update') {
+      console.log(dateValue)
+      setDateValue(parseISO(initialDate))
+      setIsHidden(propIsHidden)
+    }else{
+      if(initialDate && propActionType === 'Create'){
+        console.log(dateValue)
+        setDateValue(initialDate)
+        setIsHidden(propIsHidden)
+      }
+    }
+  }, [initialDate, propActionType]);
 
   const { canBeDisabled, field, form: { touched, errors }, label } = props;
 
@@ -19,7 +46,7 @@ function PortDate(props) {
   }
 
   const handleOnChange = (date) => {
-    setStartDate(date);
+    setDateValue(date);
 
     setFieldValueAndTouched(date, true)
   }
@@ -34,16 +61,16 @@ function PortDate(props) {
   //   let datePicker;
   //   if (label === "Start Date"){
   //     datePicker = <DatePicker
-  //                   selected={startDate}
+  //                   selected={dateValue}
   //                   onChange={date => handleOnChange(date)}
   //                   dropDownMode="select"
-  //                   maxDate={startDate}
+  //                   maxDate={dateValue}
   //                   showMonthDropdown
   //                   showYearDropdown
   //                 />
   //   }else {
   //     datePicker = <DatePicker
-  //                   selected={startDate}
+  //                   selected={dateValue}
   //                   onChange={date => handleOnChange(date)}
   //                   dropDownMode="select"
   //                   showMonthDropdown
@@ -59,7 +86,7 @@ function PortDate(props) {
         <div className="input-group">
           {!isHidden &&
               <DatePicker
-                selected={startDate}
+                selected={dateValue}
                 onChange={date => handleOnChange(date)}
                 dropDownMode="select"
                 maxDate={new Date()}
@@ -79,7 +106,7 @@ function PortDate(props) {
           <Fragment>
             <span>Still Working Here</span>
             <Button
-              onClick={() => toggleDate(startDate)}
+              onClick={() => toggleDate(dateValue)}
               >Set End Date
             </Button>
           </Fragment>
