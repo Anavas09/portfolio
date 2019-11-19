@@ -1,6 +1,6 @@
-import { Fragment } from 'react';
-import BaseLayout from '../components/layouts/BaseLayout';
+import React, { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
+import axios from 'axios';
 
 import {
   Col,
@@ -11,9 +11,69 @@ import {
 import { format } from 'date-fns';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import BaseLayout from '../components/layouts/BaseLayout';
 import BasePage from '../components/BasePage';
+import { getBlogs } from '../actions';
+import BlogsSpinner from '../components/layouts/BlogsSpinner';
+import { shortenText } from '../utils';
 
 function Blogs() {
+  
+  const [error, setError] = useState(undefined);
+
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    const fetchAPI = async () => {
+      const blogs = await getBlogs();
+      setBlogs(blogs);
+    };
+
+    try {
+      fetchAPI();
+    } catch (err) {
+      setError(err)
+      console.log(error)
+    }
+
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
+  const renderBlogs = (blogs) => {
+
+    return (
+      !blogs.length > 0 ?
+        <BlogsSpinner />
+        :
+        blogs.map((blog, i) => {
+          return (
+            <Fragment key={i}>
+              <div key={i} className="post-preview">
+                <Link href={`/blogs/${blog.slug}`}>
+                  <a>
+                    <h2 className="post-title">
+                      {blog.title}
+                    </h2>
+                    <h3 className="post-subtitle">
+                      {shortenText(blog.subTitle)}
+                    </h3>
+                  </a>
+                </Link>
+                <p className="post-meta">Posted by
+                  <a href="#"> {blog.author} </a>
+                  {format(new Date(blog.updatedAt), "EEEE, MMMM dd, yyyy h:mm aaaaaa")}</p>
+              </div>
+              <hr></hr>
+            </Fragment>
+          )
+        })
+    )
+  }
+
   return (
     <BaseLayout headerType={'landing'} className="blog-listing-page">
       <div className="masthead" style={{"backgroundImage": "url('/static/images/home-bg.jpg')"}}>
@@ -32,57 +92,8 @@ function Blogs() {
       <BasePage className="blog-body">
         <Row>
           <Col md="10" lg="8" className="mx-auto">
-            {
-              <Fragment>
-              <div  className="post-preview">
-                <Link route={`/blogs/blogId`}>
-                  <a>
-                    <h2 className="post-title">
-                      Very Nice Blog Post
-                    </h2>
-                    <h3 className="post-subtitle">
-                      How I Start Porgramming...
-                    </h3>
-                  </a>
-                </Link>
-                <p className="post-meta">Posted by
-                  <a href="#"> Angel Navas </a>
-                  {format(new Date(), "EEEE, MMMM dd, yyyy h:mm aaaaaa")}</p>
-              </div>
-              <hr></hr>
-              <div  className="post-preview">
-                <Link route={`/blogs/blogId`}>
-                  <a>
-                    <h2 className="post-title">
-                      Very Nice Blog Post
-                    </h2>
-                    <h3 className="post-subtitle">
-                      How I Start Porgramming...
-                    </h3>
-                  </a>
-                </Link>
-                <p className="post-meta">Posted by
-                  <a href="#"> Angel Navas </a>
-                  {format(new Date(), "EEEE, MMMM dd, yyyy h:mm aaaaaa")}</p>
-              </div>
-              <hr></hr>
-              <div  className="post-preview">
-                <Link route={`/blogs/blogId`}>
-                  <a>
-                    <h2 className="post-title">
-                      Very Nice Blog Post
-                    </h2>
-                    <h3 className="post-subtitle">
-                      How I Start Porgramming...
-                    </h3>
-                  </a>
-                </Link>
-                <p className="post-meta">Posted by
-                  <a href="#"> Angel Navas </a>
-                  {format(new Date(), "EEEE, MMMM dd, yyyy h:mm aaaaaa")}</p>
-              </div>
-              <hr></hr>
-            </Fragment>
+            { 
+              renderBlogs(blogs)
             }
             <div className="clearfix">
               <a className="btn btn-primary float-right" href="#">Older Posts &rarr;</a>

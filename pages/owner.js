@@ -29,4 +29,4 @@ Owner.getInitialProps = async () => {
   return { portfolios: portfoliosx.splice(0, 10) };
 };
 
-export default useAuthentication(Owner, 'siteOwner');
+export default useAuthentication('siteOwner', Owner);

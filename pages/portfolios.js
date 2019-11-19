@@ -2,7 +2,6 @@ import { Fragment, useEffect, useState } from 'react';
 import { useAuth0 } from '../react-auth0-spa';
 import { withRouter } from "next/router";
 import Link from 'next/link';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 
 import PortfolioCard from '../components/portofolios/PortfolioCard';
@@ -14,12 +13,13 @@ import {
   Col,
   Row
 } from 'reactstrap';
+import { deletePortfolio, getPortfolios } from '../actions';
 
 const namespace = 'http://localhost:3000';
 
 function Portfolios(props) {
 
-  const [portfolios, setPortfolios] = useState([])
+  //const [portfolios, setPortfolios] = useState([])
   
   const { getTokenSilently, isAuthenticated, user } = useAuth0();
 
@@ -31,18 +31,17 @@ function Portfolios(props) {
     }
   }
 
-  const deletePortfolio = async (portfolioId) => {
+  const deleteThisPortfolio = async (portfolioId) => {
     if (isAuthenticated) {
-      const url = `http://localhost:3000/api/v1/portfolios/${portfolioId}`;
       const token = await getTokenSilently();
       const headers = { 'Authorization': `Bearer ${token}` };
-      axios.delete(url, { headers })
+      deletePortfolio(portfolioId, headers)
               .then(() => {
                 Swal.fire(
                   'Deleted!',
                   'Your portfolio has been deleted.',
                   'success'
-                ).then(() => props.router.reload())
+                ).then(() => props.router.push('/portfolios'))
               })
               .catch(err => {
                 console.error(err);
@@ -65,7 +64,7 @@ function Portfolios(props) {
     Swal.fire({
       title: `Are you sure you want to delete ${portfolioTitle}?`,
       text: "You won't be able to revert this!",
-      type: 'warning',
+      type: 'question',
       showCancelButton: true,
       showCloseButton: true,
       confirmButtonColor: '#d33',
@@ -73,15 +72,14 @@ function Portfolios(props) {
       confirmButtonText: 'Yes, delete this portfolio!'
     }).then((result) => {
         if (result.value) {
-          deletePortfolio(portfolioId);
+          deleteThisPortfolio(portfolioId);
         }
     })
   }
 
   useEffect(() => {
-    const url = "http://localhost:3000/api/v1/portfolios";
     const fetchAPI = async () => {
-      await axios.get(url)
+      await getPortfolios()
               .then(res => {
                 setPortfolios(res.data);
               })
@@ -93,7 +91,8 @@ function Portfolios(props) {
   }, []);
 
   const renderPortfolios = (portfolios) => {
-      return portfolios.map(portfolio => {
+    return portfolios.length > 0 && (
+      portfolios.map(portfolio => {
             return (
               <Col md="4" key={portfolio._id}>
                 <PortfolioCard portfolio={portfolio}>
@@ -115,8 +114,10 @@ function Portfolios(props) {
                 </PortfolioCard>
               </Col>
             )
-          })
+          }))
   }
+
+  const { portfolios } = props
 
   return (
     <BaseLayout>
@@ -138,11 +139,15 @@ function Portfolios(props) {
   )
 };
 
-// Portfolios.getInitialProps = async () => {
-//   const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
-//   const portfolios = await res.data;
+Portfolios.getInitialProps = async () => {
+  let portfolios = {};
+  try {
+    portfolios = await getPortfolios();
+  } catch(err){
+    console.error(err);
+  }
 
-//   return { portfolios: portfolios.splice(0, 10) };
-// };
+  return { portfolios: portfolios }
+}
 
 export default withRouter(Portfolios);

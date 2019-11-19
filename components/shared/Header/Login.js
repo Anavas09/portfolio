@@ -21,10 +21,24 @@ function Login(){
       background: '#17a2b8'
     })
   }
+  
+  const errorToast = () => {
+    Toast.fire({
+      type: 'error',
+      title: 'Something wrong',
+      background: '#dc3545'
+    })
+  }
 
   return (
       <span
-        onClick={() => loginWithPopup({}).then(() => loginToast())}
+        onClick={() => loginWithPopup({})
+                        .then(res => {
+                            console.log(res)
+                            loginToast()
+                          })
+                        .catch(() => errorToast())
+                      }
         className="nav-link port-navbar-link clickable"
       >
         Login

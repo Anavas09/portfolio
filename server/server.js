@@ -11,10 +11,8 @@ const config = require('./config');
 
 const bodyParser = require('body-parser');
 
-const bookRoutes = require('./routes/book');
+const blogRoutes = require('./routes/blog');
 const portfolioRoutes = require('./routes/portfolio');
-
-const portfolioCtrl = require('./controllers/portfolio');
 
 
 const port = process.env.PORT || 3000;
@@ -40,7 +38,7 @@ const products = [
 
 const { checkRole, checkScopes, jwtCheck } = authServices;
 
-mongoose.connect(config.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(config.DB_URI, { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.info('Database connected!'))
   .catch((err) => console.error(err))
 
@@ -59,15 +57,15 @@ app.prepare().then(() => {
 
   server.use(bodyParser.json());
 
-  server.use('/api/v1/books', bookRoutes);
   server.use('/api/v1/portfolios', portfolioRoutes);
+  server.use('/api/v1/blogs', blogRoutes);
 
   server.get('/secretdata', jwtCheck, checkScopes, (req, res) => {
     return res.json(products)
   })
 
   server.get('/onlysiteowner', jwtCheck, checkScopes, checkRole('siteOwner'), (req, res) => {
-    console.log(req.user)
+    //console.log(req.user)
     return res.json(products)
   })
 
