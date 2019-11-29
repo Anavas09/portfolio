@@ -15,7 +15,7 @@ function BlogDetail(props) {
   const { blog } = props;
 
   return (
-    <BaseLayout>
+    <BaseLayout title="Blog Details">
       <BasePage className="blog-detail-page">
         <Row>
           <Col md={{ size: 8, offset: 2 }}>

@@ -33,8 +33,7 @@ function Login(){
   return (
       <span
         onClick={() => loginWithPopup({})
-                        .then(res => {
-                            console.log(res)
+                        .then(() => {
                             loginToast()
                           })
                         .catch(() => errorToast())

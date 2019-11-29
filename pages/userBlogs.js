@@ -1,33 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth0 } from '../react-auth0-spa';
+import React, { useEffect, useState } from "react";
+import { useAuth0 } from "../react-auth0-spa";
 import { withRouter } from "next/router";
-import Swal from 'sweetalert2';
-import axios from 'axios';
-import Link from 'next/link';
+import Swal from "sweetalert2";
+import axios from "axios";
+import Link from "next/link";
 
-import {
-  Button,
-  Col,
-  Container,
-  Row
-} from 'reactstrap';
+import { Button, Col, Container, Row } from "reactstrap";
 
-import { format } from 'date-fns';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import BaseLayout from '../components/layouts/BaseLayout';
-import BasePage from '../components/BasePage';
+import BaseLayout from "../components/layouts/BaseLayout";
+import BasePage from "../components/BasePage";
 
-import useAuthentication from '../components/hoc/withAuth';
-import { deleteBlog, getUserBlogs, updateBlog} from '../actions';
-import PortButtonDropdown from '../components/PortButtonDropdown';
+import useAuthentication from "../components/hoc/withAuth";
+import { deleteBlog, getUserBlogs, updateBlog } from "../actions";
+import PortButtonDropdown from "../components/PortButtonDropdown";
 
 function UserBlogs(props) {
-  
   const [error, setError] = useState(undefined);
 
   const [blogs, setBlogs] = useState([]);
-  
+
   const { getTokenSilently, isAuthenticated } = useAuth0();
 
   useEffect(() => {
@@ -36,7 +29,7 @@ function UserBlogs(props) {
       const source = CancelToken.source();
       const fetchAPI = async () => {
         const token = await getTokenSilently();
-        const headers = { 'Authorization': `Bearer ${token}` };
+        const headers = { Authorization: `Bearer ${token}` };
         const blogs = await getUserBlogs(headers);
         setBlogs(blogs);
       };
@@ -44,8 +37,8 @@ function UserBlogs(props) {
       try {
         fetchAPI();
       } catch (error) {
-        setError(err)
-        rejectPromise(err)
+        setError(err);
+        rejectPromise(err);
       }
 
       return () => {
@@ -56,153 +49,171 @@ function UserBlogs(props) {
 
   const navigateToEdit = (blogId, e) => {
     e.stopPropagation();
-    props.router.push(`/blogs/edit/${blogId}`)
-  }
+    props.router.push(`/blogs/edit/${blogId}`);
+  };
 
-  const createStatus = (status) => {
-    return status === 'draft' ? {view:'Publish Story',value:'published'}
-                              : {view:'Make a Draft',value:'draft'}
-  }
+  const createStatus = status => {
+    return status === "draft"
+      ? { view: "Publish Story", value: "published" }
+      : { view: "Make a Draft", value: "draft" };
+  };
 
   const updateBlogStatus = async (blogId, status) => {
-
     if (isAuthenticated) {
       const token = await getTokenSilently();
-      const headers = { 'Authorization': `Bearer ${token}` };
-      debugger;
-      updateBlog(blogId, {status}, headers)
+      const headers = { Authorization: `Bearer ${token}` };
+      return updateBlog(blogId, { status }, headers)
         .then(res => {
-          debugger;
-          if(res.status === 200){
+          if (res.status === 200) {
             Swal.fire(
-              'Updated',
-              'Blog Status was successfuly updated',
-              'success'
+              "Updated",
+              "Blog Status was successfuly updated",
+              "success"
             ).then(() => props.router.push(`/userBlogs`));
           }
         })
         .catch(err => {
-          console.error(err)
-          Swal.fire(
-            'Failed',
-            err.message,
-            'error'
-          )
+          console.error(err);
+          Swal.fire("Failed", err.message, "error");
         });
     }
-  }
+  };
 
   const updateModal = (blogId, status) => {
     Swal.fire({
       title: `You want to ${status} this Blog?`,
-      type: 'question',
-      confirmButtonText: status === 'draft' ? 'Published' : 'Draft',
-      confirmButtonColor: '#28a745',
+      type: "question",
+      confirmButtonText: status === "draft" ? "Draft" : "Publish",
+      confirmButtonColor: "#28a745",
       showCancelButton: true,
-      cancelButtonColor: '#dc3545',
-      showCloseButton: true
-    }).then((result) => {
+      cancelButtonColor: "#dc3545",
+      showCloseButton: true,
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        return updateBlogStatus(blogId, status)
+          .then(res => {
+            Swal.fire(
+              "Updated",
+              "Blog Status was successfuly updated",
+              "success"
+            ).then(() => props.router.push(`/userBlogs`));
+          })
+          .catch(err => {
+            Swal.showValidationMessage(`Request failed: ${err}`);
+          });
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then(result => {
       if (result.value) {
-        updateBlogStatus(blogId, status);
+        Swal.fire(
+          "Updated",
+          "Blog Status was successfuly updated",
+          "success"
+        ).then(() => props.router.push(`/userBlogs`));
       }
-    })
-  }
+    });
+  };
 
   const changeBlogStatus = (blogId, status) => {
-    updateModal(blogId, status)
-  }
+    updateModal(blogId, status);
+  };
 
-  const deleteThisBlog = async (blogId) => {
+  const deleteThisBlog = async blogId => {
     if (isAuthenticated) {
       const token = await getTokenSilently();
-      const headers = { 'Authorization': `Bearer ${token}` };
-      return deleteBlog(blogId, headers)
-    };
-  }
+      const headers = { Authorization: `Bearer ${token}` };
+      return deleteBlog(blogId, headers);
+    }
+  };
 
   const showDeleteWarning = (blogId, blogTitle, e) => {
     e.stopPropagation();
     Swal.fire({
       title: `Are you sure you want to delete ${blogTitle}?`,
       text: "You won't be able to revert this!",
-      type: 'question',
+      type: "question",
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#28A746',
-      confirmButtonText: 'Yes, delete this blog!',
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#28A746",
+      confirmButtonText: "Yes, delete this blog!",
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return deleteThisBlog(blogId)
           .then(res => {
-            Swal.fire(
-              res,
-              'Your blog has been deleted.',
-              'success'
-            ).then(() => props.router.push('/userBlogs'))
+            Swal.fire(res, "Your blog has been deleted.", "success").then(() =>
+              props.router.push("/userBlogs")
+            );
           })
           .catch(err => {
-            Swal.showValidationMessage(
-              `Request failed: ${err}`
-            )
-          })
+            Swal.showValidationMessage(`Request failed: ${err}`);
+          });
       },
       allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
+    }).then(result => {
       if (result.value) {
         Swal.fire(
-          'Deleted!',
-          'Your blog has been deleted.',
-          'success'
-        ).then(() => props.router.push('/userBlogs'))
+          "Deleted!",
+          "Your blog has been deleted.",
+          "success"
+        ).then(() => props.router.push("/userBlogs"));
       }
-    })
-  }
+    });
+  };
 
-  const dropdownOptions = (blog) => {
+  const dropdownOptions = blog => {
     const blogStatus = createStatus(blog.status);
 
     return [
-      { text: blogStatus.view, handlers: {onClick: () => changeBlogStatus(blog._id, blogStatus.value)}},
-      { text: 'Delete', handlers: {onClick: (e) => showDeleteWarning(blog._id, blog.title, e)}}
-    ]
-  }
+      {
+        text: blogStatus.view,
+        handlers: {
+          onClick: () => changeBlogStatus(blog._id, blogStatus.value)
+        }
+      },
+      {
+        text: "Delete",
+        handlers: { onClick: e => showDeleteWarning(blog._id, blog.title, e) }
+      }
+    ];
+  };
 
-  const separateBlogs = (blogs) => {
+  const separateBlogs = blogs => {
     const drafts = [];
     const published = [];
 
     blogs.map(blog => {
-      return blog.status === 'draft' ? drafts.push(blog) : published.push(blog)
-    })
+      return blog.status === "draft" ? drafts.push(blog) : published.push(blog);
+    });
 
-    return {drafts, published}
-  }
+    return { drafts, published };
+  };
 
-  const renderBlogs = (blogs) => {
+  const renderBlogs = blogs => {
     return (
       <ul className="user-blog-list">
-      {
-        blogs.map((blog, i) => {
+        {blogs.map((blog, i) => {
           return (
             <li key={i}>
               <Link href={`/blogs/edit/${blog._id}`}>
                 <a>{blog.title}</a>
               </Link>
-              <PortButtonDropdown items={dropdownOptions(blog)}/>
+              <PortButtonDropdown items={dropdownOptions(blog)} />
             </li>
-          )
-        })
-      }
+          );
+        })}
       </ul>
-    )
-  }
+    );
+  };
 
   const { drafts, published } = separateBlogs(blogs);
 
   return (
-    <BaseLayout headerType={'landing'}>
-      <div className="masthead" style={{backgroundImage: "url('/static/images/home-bg.jpg')"}}>
+    <BaseLayout headerType={"landing"} title="User Blogs">
+      <div
+        className="masthead"
+        style={{ backgroundImage: "url('/static/images/home-bg.jpg')" }}
+      >
         <div className="overlay"></div>
         <Container>
           <div className="row">
@@ -210,9 +221,11 @@ function UserBlogs(props) {
               <div className="site-heading">
                 <h1>Blogs Dashboard</h1>
                 <span className="subheading">
-                  Let's write some nice blog{' '}
-                  <Link href={'/blogEditor'} as='/blogs/new'>
-                    <a><Button color="primary">Create a new blog</Button></a>
+                  Let's write some nice blog{" "}
+                  <Link href={"/blogEditor"} as="/blogs/new">
+                    <a>
+                      <Button color="primary">Create a new blog</Button>
+                    </a>
                   </Link>
                 </span>
               </div>
@@ -236,4 +249,4 @@ function UserBlogs(props) {
   );
 }
 
-export default useAuthentication('siteOwner', withRouter(UserBlogs));
+export default useAuthentication("siteOwner", withRouter(UserBlogs));

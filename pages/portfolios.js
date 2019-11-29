@@ -15,7 +15,7 @@ import {
 } from 'reactstrap';
 import { deletePortfolio, getPortfolios } from '../actions';
 
-const namespace = 'http://localhost:3000';
+const namespace = process.env.NAMESPACE;
 
 function Portfolios(props) {
 
@@ -77,18 +77,18 @@ function Portfolios(props) {
     })
   }
 
-  useEffect(() => {
-    const fetchAPI = async () => {
-      await getPortfolios()
-              .then(res => {
-                setPortfolios(res.data);
-              })
-              .catch(err => {
-                console.error(err);
-              });
-    };
-    fetchAPI();
-  }, []);
+  // useEffect(() => {
+  //   const fetchAPI = async () => {
+  //     await getPortfolios()
+  //             .then(res => {
+  //               setPortfolios(res.data);
+  //             })
+  //             .catch(err => {
+  //               console.error(err);
+  //             });
+  //   };
+  //   fetchAPI();
+  // }, []);
 
   const renderPortfolios = (portfolios) => {
     return portfolios.length > 0 && (
@@ -120,7 +120,7 @@ function Portfolios(props) {
   const { portfolios } = props
 
   return (
-    <BaseLayout>
+    <BaseLayout title="Angel Navas - See My Jobs">
       <BasePage className="portfolio-page" title="Portfolios">
         {isAuthenticated && isSiteOwner && (
           <Button

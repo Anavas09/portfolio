@@ -5,7 +5,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import BaseLayout from "../layouts/BaseLayout";
 import BasePage from "../BasePage";
 
-const namespace = 'http://localhost:3000';
+const namespace = process.env.NAMESPACE;
 
 const useAuthentication = (role, Component) => props => {
 

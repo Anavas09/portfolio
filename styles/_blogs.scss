@@ -1,12 +1,4 @@
-// MIXINS
-@mixin background-cover() {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-  
-  // Blog LISTING!
+// Blog LISTING!
   
 .blog-listing-page {
     min-height: 100vh;

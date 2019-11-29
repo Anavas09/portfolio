@@ -72,7 +72,7 @@ function portfolioEdit(props) {
   };
 
   return (
-    <BaseLayout>
+    <BaseLayout title="Edit Portfolio">
       <BasePage className="portfolio-create-page" title="Update Portfolio">
         <Row>
           <Col md="6">

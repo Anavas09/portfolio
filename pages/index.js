@@ -1,61 +1,67 @@
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import Typed from 'react-typed';
 import { useAuth0 } from "../react-auth0-spa";
 
 import BaseLayout from '../components/layouts/BaseLayout';
-
-const PostLink = ({ post }) => (
-  <li>
-    <Link href="/p/[id]" as={`/p/${post.id}`}>
-      <a>{post.title}</a>
-    </Link>
-    <style jsx>{`
-      li {
-        list-style: none;
-        margin: 5px 0;
-      }
-
-      a {
-        text-decoration: none;
-        color: blue;
-        font-family: 'Arial';
-      }
-
-      a:hover {
-        opacity: 0.6;
-      }
-    `}</style>
-  </li>
-);
+import { useInterval } from '../utils';
 
 function Index() {
 
+  const [isFlipping, setIsFlipping] = useState(false);
+
   const { isAuthenticated, user } = useAuth0();
 
-  const roles = ['Front End Developer', 'Tech Lover', 'Alexa is better than Siri', 'React.js']
+  const roles = ['Front End Developer', 'Tech Lover', 'ReactJS', 'NextJS']
+
+  useInterval(() => {
+    setIsFlipping(!isFlipping);
+  }, 30000);
 
   return (
-    <BaseLayout className="cover" headerType="index">
+    <BaseLayout
+      className={`cover ${isFlipping ? 'cover-1' : ''}`} headerType="index"
+      title="Angel Navas - Portfolio"
+    >
       <div className="main-section">
         <div className="background-image">
-          <img src="/static/images/background-index.png" />
+          <img alt="background image" src="/static/images/background-index.png" />
         </div>
 
         <Container>
           <Row>
             <Col md="6">
               <div className="hero-section">
-                <div className={`flipper`}>
-                  <div className="back">
+                <div className={`flipper ${isFlipping ? 'isFlipping' : ''}`}>
+                  <div className="front">
                     <div className="hero-section-content">
                       <h2> Front End Developer </h2>
                       <div className="hero-section-content-intro">
                         Have a look at my portfolio and job history.
                       </div>
                     </div>
-                    <img className="image" src="/static/images/section-1.png"/>
+                    <img
+                      alt="busy programming guy"
+                      className="image"
+                      src="/static/images/section-1.png"
+                    />
                     <div className="shadow-custom">
+                      <div className="shadow-inner"> </div>
+                    </div>
+                  </div>
+                  <div className="back">
+                    <div className="hero-section-content">
+                      <h2> Specialized in ReactJS </h2>
+                      <div className="hero-section-content-intro">
+                        Junior Web Developer.
+                      </div>
+                    </div>
+                    <img
+                      alt="orange busy programming guy"
+                      className="image"
+                      src="/static/images/section-2.png"
+                    />
+                    <div className="shadow-custom shadow-custom-2">
                       <div className="shadow-inner"> </div>
                     </div>
                   </div>
@@ -83,13 +89,16 @@ function Index() {
               >
               </Typed>
               <div className="hero-welcome-bio">
-                <h1>
+                <h2>
                   Let's take a look on my work.
-                </h1>
+                </h2>
               </div>
             </Col>
           </Row>
         </Container>
+        <span className="service-link"> Vector Ilustration credit: {''}
+          <a href="http://www.vecteezy.com" target="_blank" rel="noopener noreferrer">vecteezy.com</a>
+        </span>
       </div>
     </BaseLayout>
   );

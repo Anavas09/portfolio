@@ -2,7 +2,7 @@ const jwt = require('express-jwt');
 const { expressJwtSecret } = require('jwks-rsa');
 const jwtAuthz = require('express-jwt-authz');
 
-const namespace = 'http://localhost:3000';
+const namespace = process.env.NAMESPACE;
 
 //Web token validado
 exports.jwtCheck = jwt({

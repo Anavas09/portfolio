@@ -4,7 +4,7 @@ import { useAuth0 } from "../../react-auth0-spa";
 import BaseLayout from "../layouts/BaseLayout";
 import BasePage from "../BasePage";
 
-const namespace = 'http://localhost:3000';
+const namespace = process.env.NAMESPACE;
 
 //const { isAuthenticated, user } = useAuth0()
 

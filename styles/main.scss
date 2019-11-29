@@ -4,10 +4,15 @@
 //COLORS
 @import './shared/colors';
 
+//MIXINS
+@import './shared/mixins';
+
 //PAGES
 @import './index';
 @import './portfolios';
 @import './blogs';
+@import './about';
+@import './cv';
 
 //COMPONENTS
 @import './header';

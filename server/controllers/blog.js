@@ -49,7 +49,7 @@ exports.createBlog = (req, res) => {
     lock.acquire(lockId, function(done) {
       // async work
 
-      const namespace = 'http://localhost:3000';
+      const namespace = process.env.NAMESPACE;
       const blogData = req.body;
     
       const userId = req.user && req.user.sub;

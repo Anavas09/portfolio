@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const next = require('next');
 const authServices = require('./middlewares/auth');
 const mongoose = require('mongoose');
@@ -13,6 +14,13 @@ const bodyParser = require('body-parser');
 
 const blogRoutes = require('./routes/blog');
 const portfolioRoutes = require('./routes/portfolio');
+
+const robotsOptions = {
+  root: path.join(__dirname, "../static"),
+  headers: {
+    'Content-Type': 'text/plain;charset=UTF-8'
+  }
+}
 
 
 const port = process.env.PORT || 3000;
@@ -60,6 +68,10 @@ app.prepare().then(() => {
   server.use('/api/v1/portfolios', portfolioRoutes);
   server.use('/api/v1/blogs', blogRoutes);
 
+  server.get('/robots.txt', (req, res) => {
+    return res.status(200).sendFile('robots.txt', robotsOptions);
+  })
+
   server.get('/secretdata', jwtCheck, checkScopes, (req, res) => {
     return res.json(products)
   })
@@ -85,7 +97,7 @@ app.prepare().then(() => {
 
   server.listen(port, (err) => {
     if (err) throw err
-    console.log(`> Ready on http://localhost:${port}`);
+    console.log(`> Ready on port: ${port}`);
   })
 
   /*createServer((req, res) => {

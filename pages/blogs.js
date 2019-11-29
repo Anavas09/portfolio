@@ -75,7 +75,11 @@ function Blogs() {
   }
 
   return (
-    <BaseLayout headerType={'landing'} className="blog-listing-page">
+    <BaseLayout
+      headerType={'landing'}
+      className="blog-listing-page"
+      title="Angel Navas - My Blogs"
+    >
       <div className="masthead" style={{"backgroundImage": "url('/static/images/home-bg.jpg')"}}>
         <div className="overlay"></div>
         <Container>
@@ -107,23 +111,7 @@ function Blogs() {
               <div className="col-lg-8 col-md-10 mx-auto">
                 <ul className="list-inline text-center">
                   <li className="list-inline-item">
-                    <a href="#">
-                      <span className="fa-stack fa-lg">
-                        <FontAwesomeIcon icon="circle" className="fa-stack-2x"/>
-                        <FontAwesomeIcon icon={['fab', 'twitter']} inverse className="fa-stack-1x"/>
-                      </span>
-                    </a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a href="#">
-                      <span className="fa-stack fa-lg">
-                        <FontAwesomeIcon icon="circle" className="fa-stack-2x"/>
-                        <FontAwesomeIcon icon={['fab', 'facebook']} inverse className="fa-stack-1x"/>
-                      </span>
-                    </a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a href="#">
+                    <a href="https://github.com/Anavas09" target="_blank" rel="noopener noreferrer">
                       <span className="fa-stack fa-lg">
                         <FontAwesomeIcon icon="circle" className="fa-stack-2x"/>
                         <FontAwesomeIcon icon={['fab', 'github']} inverse className="fa-stack-1x"/>

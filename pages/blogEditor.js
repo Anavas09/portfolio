@@ -97,7 +97,7 @@ function BlogEditor(props) {
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout title="Blog Editor">
       <BasePage containerClass={"editor-wrapper"} className="blog-editor-page">
         <SlateEditor
           isnew={true}

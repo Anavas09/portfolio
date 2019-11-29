@@ -1,16 +1,17 @@
 import React from 'react';
-import Link from 'next/link';
 
 import PropTypes from 'prop-types';
+import ActiveLink from '../../ActiveLink';
 
 function BsNavLink(props) {
 
   const { route, title} = props;
+  const className = props.className || "";
 
   return (
-    <Link href={route}>
-      <a className="nav-link port-navbar-link" title={title}>{title}</a>
-    </Link>
+    <ActiveLink activeClassName="active" href={route}>
+      <a className={`nav-link port-navbar-link ${className}`} title={title}>{title}</a>
+    </ActiveLink>
   );
 };
 

@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { getBlogById, rejectPromise, updateBlog } from '../../../actions'
+import { getBlogById, updateBlog } from '../../../actions'
 
 import BaseLayout from '../../../components/layouts/BaseLayout';
 import BasePage from '../../../components/BasePage';
@@ -117,7 +117,7 @@ function BlogEditorUpdate(props) {
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout title="Edit Blog">
       <BasePage containerClass={"editor-wrapper"} className="blog-editor-page">
         { !blog ?
           <BlogEditSpinner /> 

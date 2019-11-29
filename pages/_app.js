@@ -39,13 +39,17 @@ class MyApp extends App {
           : window.location.pathname
       );
     };*/
+
+    //ENV
+    const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
+    const BASE_URL = process.env.BASE_URL;
     
     const { Component, pageProps } = this.props
     return (
       <Auth0Provider
         domain={config.domain}
-        client_id={config.clientId}
-        redirect_uri={config.callbackUrl}
+        client_id={AUTH0_CLIENT_ID}
+        redirect_uri={`${BASE_URL}/callback`}
         audience={config.audience}
         scope='read:portfolios'
       >
