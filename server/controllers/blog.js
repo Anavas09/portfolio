@@ -58,8 +58,6 @@ exports.createBlog = (req, res) => {
       const blog = new Blog(blogData);
       blog.userId = userId;
       blog.author = author;
-      console.info("blog with userId and author");
-      console.info(blog);
     
       blog.save((err, createdBlog) => {
         setTimeout(() => done(), 5000);

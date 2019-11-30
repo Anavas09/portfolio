@@ -17,7 +17,7 @@ import ControllMenu from './ControllMenu';
 class SlateEditor extends React.Component {
   // Set the initial value when the app is first constructed.
   state = {
-    value: html.deserialize('<p>Holis</p>')
+    value: html.deserialize('<p>Write something...</p>')
   }
 
   menuRef = React.createRef();
@@ -109,7 +109,6 @@ class SlateEditor extends React.Component {
 
     const headingValues = this.getHeadingValues();
     const text = html.serialize(value);
-    debugger;
 
     !isloadingdata && saveblog(text, headingValues);
   }

@@ -9,7 +9,7 @@ exports.jwtCheck = jwt({
   secret: expressJwtSecret({
     cache: true,
     rateLimit: true,
-    jwksRequestsPerMinute: 5,
+    jwksRequestsPerMinute: 50,
     jwksUri: "https://dev-hk8t7icc.auth0.com/.well-known/jwks.json"
   }),
   audience: "https://portfolio",

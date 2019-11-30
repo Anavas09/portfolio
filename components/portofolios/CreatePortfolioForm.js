@@ -17,15 +17,12 @@ const INITIAL_VALUES = {
 }
 
 function CreatePortfolioForm({ action, error, handleSubmit, initialValues }){
-  console.log(initialValues)
 
   let initialValuesN = INITIAL_VALUES;
 
   useEffect(() => {
-    debugger;
     if (initialValues) {
       if (initialValues.title){
-        debugger;
         initialValuesN.title = initialValues.title
         initialValuesN.company = initialValues.company
         initialValuesN.location = initialValues.location
@@ -34,15 +31,11 @@ function CreatePortfolioForm({ action, error, handleSubmit, initialValues }){
         //initialValuesN = initialValues
       }
     }
-    console.log(initialValuesN)
   }, [initialValues]);
 
   const sD = () => {
-    debugger;
     if (initialValues){
-      debugger;
       if (initialValues.startDate){
-        debugger;
         return initialValues.startDate
       }else {
         return null;
@@ -53,11 +46,8 @@ function CreatePortfolioForm({ action, error, handleSubmit, initialValues }){
   }
 
   const eD = () => {
-    debugger;
     if (initialValues){
-      debugger;
       if (initialValues.endDate){
-        debugger;
         return initialValues.endDate
       }else {
         return null;
@@ -73,20 +63,21 @@ function CreatePortfolioForm({ action, error, handleSubmit, initialValues }){
 
   const validateInputs = (values) => {
     let errors = {};
-    // const before = isBefore(values.endDate, values.startDate);
-    // Object.keys(values).forEach((input) => {
+    const before = isBefore(values.endDate, values.startDate);
 
-    //   if(!values[input] && input !== 'endDate'){
-    //     errors[input] = `Field ${input} is required!`;
-    //   }
+    Object.keys(values).forEach((input) => {
 
-    //   const startDate = values.startDate;
-    //   const endDate = values.endDate;
+      if(!values[input] && input !== 'endDate'){
+        errors[input] = `Field ${input} is required!`;
+      }
 
-    //   if(startDate && endDate && before){
-    //     errors.endDate = 'End Date cannot be before Start Date';
-    //   }
-    // })
+      const startDate = values.startDate;
+      const endDate = values.endDate;
+
+      if(startDate && endDate && before){
+        errors.endDate = 'End Date cannot be before Start Date';
+      }
+    })
 
     return errors;
   }
@@ -172,61 +163,5 @@ function CreatePortfolioForm({ action, error, handleSubmit, initialValues }){
     </div>
   )
 };
-
-//import  React, { useState } from 'react';
-//
-// function CreatePortfolioForm () {
-//   const initialState = {
-//     title: '',
-//     description: 'Write Some Description',
-//     language: ''
-//   }
-
-//   const [data, setData] = useState(initialState)
-
-//   const handleOnChange = (e) => {
-//     console.log(`${[e.target.name]}: ${e.target.value}`)
-//     setData({
-//       ...data,
-//       [e.target.name]: e.target.value
-//     })
-//   }
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     window.alert(`Ostia ${data.title}, ${data.description}, ${data.language}`)
-//   }
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <div>
-//         <label>
-//           Title:
-//           <input type="text" name="title" value={data.title} onChange={handleOnChange} />
-//         </label>
-//       </div>
-
-//       <div>
-//         <label>
-//           Description:
-//           <textarea value={data.description} name="description" onChange={handleOnChange} />
-//         </label>
-//       </div>
-      
-//       <div>
-//         <label>
-//           Language:
-//           <select value={data.language} name="language" onChange={handleOnChange}>
-//             <option value="Javascript">Javascript</option>
-//             <option value="C++">C++</option>
-//             <option value="Dart">Dart</option>
-//             <option value="Java">Java</option>
-//           </select>
-//         </label>
-//       </div>
-//       <input type="submit" value="Submit" />
-//     </form>
-//   );
-// }
 
 export default CreatePortfolioForm;

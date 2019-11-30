@@ -96,7 +96,6 @@ export const deleteBlog = (blogId, headers) => {
 export const getSecretData = async (headers) => {
   return await axios.get('/secretdata', { headers })
           .then(res => {
-            console.log(res.data);
             res.data;
           })
           .catch(err => {

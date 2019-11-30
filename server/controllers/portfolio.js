@@ -17,13 +17,12 @@ exports.savePortfolio = (req, res) => {
 
   const userId = req.user && req.user.sub;
 
-  console.log(portfolioData)
   const portfolio = new Portfolio(portfolioData);
   portfolio.userId = userId;
 
   portfolio.save((err, createdPortfolio) => {
     if (err){
-      console.log(err.message)
+      console.error(err.message)
       return res.status(422).send(err.message)
     }
 

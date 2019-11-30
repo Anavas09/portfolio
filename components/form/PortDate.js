@@ -10,8 +10,6 @@ function PortDate(props) {
   const propInitialDate = initialDate;
   const propActionType = actionType;
 
-  debugger;
-
   const propDateValue = propInitialDate ? initialDate : new Date();
   const propIsHidden = propInitialDate ? false : true;
 
@@ -23,12 +21,10 @@ function PortDate(props) {
 
   useEffect(() => {
     if (initialDate && propActionType === 'Update') {
-      console.log(dateValue)
       setDateValue(parseISO(initialDate))
       setIsHidden(propIsHidden)
     }else{
       if(initialDate && propActionType === 'Create'){
-        console.log(dateValue)
         setDateValue(initialDate)
         setIsHidden(propIsHidden)
       }

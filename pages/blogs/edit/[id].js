@@ -68,10 +68,8 @@ function BlogEditorUpdate(props) {
       const token = await getTokenSilently();
       const headers = { 'Authorization': `Bearer ${token}` };
       setIsSaving(true);
-      debugger;
       updateBlog(id, editedBlog, headers)
         .then(res => {
-          debugger;
           if(res.status === 200){
             // toast.success('Blog successfuly updated',{
             //   position: toast.POSITION.TOP_RIGHT,

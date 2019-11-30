@@ -31,7 +31,6 @@ function BlogEditor(props) {
       const token = await getTokenSilently();
       const headers = { 'Authorization': `Bearer ${token}` };
       setIsSaving(true);
-      debugger;
       // axios.post(url, blog, {headers})
       //         .then(res => {
       //           if(res.status === 200){
@@ -54,7 +53,6 @@ function BlogEditor(props) {
       //         });
       createBlog(blog, headers, lockId)
         .then(res => {
-          debugger;
           if(res.status === 200){
             // toast.success('Blog successfuly updated',{
             //   position: toast.POSITION.TOP_RIGHT,
