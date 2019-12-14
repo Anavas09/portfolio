@@ -23,7 +23,6 @@ const BaseLayout = (props) => {
         <link rel="icon" type="image/ico" href="/static/favicon.ico"/>
         <link rel="manifest" href="/site.webmanifest"/>
         
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
       </Head>
       <Header className={`port-nav-${headerType}`} />
       <main className={`cover ${className}`}>

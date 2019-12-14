@@ -1,7 +1,7 @@
 import React from 'react';
 import App from 'next/app';
 import { Auth0Provider } from "../react-auth0-spa";
-import config from "../auth_config.json";
+import authConfig from "../auth_config.json";
 //Styles
 //Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,7 +10,14 @@ import '../styles/main.scss';
 import 'react-typed/dist/animatedCursor.css';
 
 //FontAwesome
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css' // Import the CSS
+config.autoAddCss = false // Tell Font Awesome to skip adding the CSS automatically since it's being imported above
+
 import fontawesome from '../utils/fontawesome';
+
+//FontsClientSide
+import Fonts from '../utils/Fonts';
 
 class MyApp extends App {
   // Only uncomment this method if you have blocking data requirements for
@@ -30,6 +37,10 @@ class MyApp extends App {
   //  return { pagePropsx }
   //}
 
+  componentDidMount() {
+    Fonts()
+  }
+
   render() {
 
     /*const onRedirectCallback = appState => {
@@ -44,13 +55,14 @@ class MyApp extends App {
     const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
     const BASE_URL = process.env.BASE_URL;
     
-    const { Component, pageProps } = this.props
+    const { Component, pageProps } = this.props; 
+
     return (
       <Auth0Provider
-        domain={config.domain}
+        domain={authConfig.domain}
         client_id={AUTH0_CLIENT_ID}
         redirect_uri={`${BASE_URL}/callback`}
-        audience={config.audience}
+        audience={authConfig.audience}
         scope='read:portfolios'
       >
         <Component {...pageProps} />

@@ -141,6 +141,11 @@ class SlateEditor extends React.Component {
         }
         {children}
         <HoverMenu ref={this.menuRef} editor={editor} />
+        <style>
+          {`
+            @import url("https://fonts.googleapis.com/icon?family=Material+Icons")
+          `}
+        </style>
       </Fragment>
     )
   }

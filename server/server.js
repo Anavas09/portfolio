@@ -1,16 +1,17 @@
 const express = require('express');
 const path = require('path');
 const next = require('next');
-const authServices = require('./middlewares/auth');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const compression = require('compression')
+
+const authServices = require('./middlewares/auth');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
 const config = require('./config');
-
-const bodyParser = require('body-parser');
 
 const blogRoutes = require('./routes/blog');
 const portfolioRoutes = require('./routes/portfolio');
@@ -63,6 +64,7 @@ mongoose.connect(config.DB_URI, { useCreateIndex: true, useNewUrlParser: true, u
 app.prepare().then(() => {
   const server = express();
 
+  server.use(compression());
   server.use(bodyParser.json());
 
   server.use('/api/v1/portfolios', portfolioRoutes);
