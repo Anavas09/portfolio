@@ -37,9 +37,10 @@ class MyApp extends App {
   //  return { pagePropsx }
   //}
 
-  componentDidMount() {
-    Fonts()
-  }
+  // Load fonts on client side
+  // componentDidMount() {
+  //   Fonts()
+  // }
 
   render() {
 

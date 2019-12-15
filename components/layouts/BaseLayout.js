@@ -17,12 +17,14 @@ const BaseLayout = (props) => {
         <meta property="og:type" content="website"/>
         <meta property="og:description" content="Hi Everyone. My name is Angel Navas. I am an entry experience ReactJS frontend developer."/>
 
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet"/>
+
         <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png"/>
         <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png"/>
         <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png"/>
         <link rel="icon" type="image/ico" href="/static/favicon.ico"/>
         <link rel="manifest" href="/site.webmanifest"/>
-        
+
       </Head>
       <Header className={`port-nav-${headerType}`} />
       <main className={`cover ${className}`}>
