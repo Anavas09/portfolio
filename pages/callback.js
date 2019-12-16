@@ -11,7 +11,7 @@ function CallBack(props) {
   })
 
   return (
-    <BaseLayout>
+    <BaseLayout title="Redirecting...">
       <BasePage>
         <p>VERIFYING DATA ...</p>
       </BasePage>

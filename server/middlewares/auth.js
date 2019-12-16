@@ -2,7 +2,9 @@ const jwt = require('express-jwt');
 const { expressJwtSecret } = require('jwks-rsa');
 const jwtAuthz = require('express-jwt-authz');
 
-const namespace = process.env.NAMESPACE;
+const config = require('../config');
+
+const namespace = config.NAMESPACE;
 
 //Web token validado
 exports.jwtCheck = jwt({
@@ -23,7 +25,7 @@ exports.checkScopes = jwtAuthz(['read:portfolios'])
 //Check Role
 exports.checkRole = role => (req, res, next) => {
   const user = req.user
-  if(user && (user[`${namespace}/role`] === role)) {
+  if(user && user[`${namespace}/role`] && (user[`${namespace}/role`] === role)) {
     next();
   }else {
     return res.status(401).send({title: 'Not Authorized', detail: 'You are not authorized to access to this data'})

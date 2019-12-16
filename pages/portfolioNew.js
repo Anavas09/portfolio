@@ -44,10 +44,10 @@ function portfolioNew(props) {
         })
         .catch(err => {
           setSubmitting(false);
-          setError(err.message);
+          setError(err);
           Swal.fire(
             'Failed',
-            err.message,
+            err,
             'error'
           );
         });
