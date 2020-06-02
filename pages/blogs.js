@@ -13,8 +13,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import BaseLayout from '../components/layouts/BaseLayout';
 import BasePage from '../components/BasePage';
-import { getBlogs } from '../actions';
+import BlogsSk from '../components/layouts/BlogsSk';
 import BlogsSpinner from '../components/layouts/BlogsSpinner';
+import { getBlogs } from '../actions';
 import { shortenText } from '../utils';
 
 function Blogs() {
@@ -47,7 +48,7 @@ function Blogs() {
 
     return (
       !blogs.length > 0 ?
-        <BlogsSpinner />
+        <BlogsSk />
         :
         blogs.map((blog, i) => {
           return (

@@ -52,7 +52,7 @@ function Header (props){
               <BsNavLink
                 className="port-dropdown-item"
                 route="/blogs"
-                title="Blog's"
+                title="Te"
               />
             </DropdownItem>
             <DropdownItem>
@@ -91,19 +91,19 @@ function Header (props){
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem className="port-navbar-item">
-              <BsNavLink route="/" title="Home" />
+              <BsNavLink route="/" title="Coño" />
             </NavItem>
             <NavItem className="port-navbar-item">
-              <BsNavLink route="/portfolios" title="Portfolios" />
+              <BsNavLink route="/portfolios" title="Renzo" />
             </NavItem>
             <NavItem className="port-navbar-item">
-              <BsNavLink route="/about" title="About"/>
+              <BsNavLink route="/about" title="Verga"/>
             </NavItem>
             <NavItem className="port-navbar-item">
               {renderMenu()}
             </NavItem>
             <NavItem className="port-navbar-item">
-              <BsNavLink route="/cv" title="CV" />
+              <BsNavLink route="/cv" title="Amo" />
             </NavItem>
             {!isAuthenticated && (
               <NavItem className="port-navbar-item">

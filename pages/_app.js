@@ -3,6 +3,8 @@ import App from 'next/app';
 import { Auth0Provider } from "../react-auth0-spa";
 import authConfig from "../auth_config.json";
 //Styles
+//Antd
+import 'antd/dist/antd.css';
 //Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 //Static

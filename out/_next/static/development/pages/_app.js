@@ -22043,7 +22043,7 @@ function (_App) {
   }
 
   Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(MyApp, [{
-    key: "componentDidMount",
+    key: "render",
     // Only uncomment this method if you have blocking data requirements for
     // every single page in your application. This disables the ability to
     // perform automatic static optimization, causing every page in your app to
@@ -22060,11 +22060,10 @@ function (_App) {
     //
     //  return { pagePropsx }
     //}
-    value: function componentDidMount() {
-      Object(_utils_Fonts__WEBPACK_IMPORTED_MODULE_15__["default"])();
-    }
-  }, {
-    key: "render",
+    // Load fonts on client side
+    // componentDidMount() {
+    //   Fonts()
+    // }
     value: function render() {
       /*const onRedirectCallback = appState => {
         history.push(
