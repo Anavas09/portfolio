@@ -75,7 +75,7 @@ function Header (props){
     }
 
     return (
-      <BsNavLink route="/blogs" title="Blog's" />
+      <BsNavLink route="/blogs" title="Te" />
     )
   }
 
