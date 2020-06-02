@@ -18,9 +18,9 @@ function BlogDetail(props) {
     <BaseLayout title="Blog Details">
       <BasePage className="blog-detail-page">
         <Row>
-          <Col md={{ size: 8, offset: 2 }}>
+          {/*<Col md={{ size: 8, offset: 2 }}>
             <div dangerouslySetInnerHTML={{__html: blog.story}}></div>
-          </Col>
+          </Col>*/}
         </Row>
       </BasePage>
     </BaseLayout>
